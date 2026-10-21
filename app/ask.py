@@ -52,7 +52,7 @@ def main() -> None:
             print(f"[質問] {question}\n")
             print(ask(question, chat))
             try:
-                question = input("\n続けて質問（終了するには空Enter）: ").strip()
+                question = input("\n続けて質問してください（終了するには空Enter）: ").strip()
             except EOFError:
                 break
     except errors.APIError as e:
