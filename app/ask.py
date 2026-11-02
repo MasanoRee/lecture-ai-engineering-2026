@@ -25,10 +25,17 @@ def ask(question: str) -> str:
     client = genai.Client(api_key=get_api_key())
     response = client.models.generate_content(model=MODEL, contents=question)
 
+    question = first_question
+    while question:
+        response = session.send_message(question) # これまでの履歴＋今回の質問を送る
+        print(response.text)
+        usage = response.usage_metadata
+        print(f"[tokens] 入力 {usage.prompt_token_count} / 出力 {usage.candidates_token_count}")
+        question = input("¥n[続けて質問（空行で終了）] ").strip()
+
     # TODO(第1回 演習): response.usage_metadata から
     #   入力トークン数と出力トークン数を表示してみよう（Copilotに頼んでよい）
-
-    return response.text
+    # return response.text
 
 
 def main() -> None:
